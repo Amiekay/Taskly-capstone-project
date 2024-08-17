@@ -3,8 +3,8 @@ const redis = require('redis')
 
 const client = redis.createClient(
 {
-    host: 'localhost',
-    port: 6379
+    port: 6379, // Redis port
+    host: "127.0.0.1", 
 }
 )
 .on('connect',()=>{

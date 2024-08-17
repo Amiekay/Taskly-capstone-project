@@ -34,6 +34,7 @@ app.use(morgan('dev'));
 
 // Apply the rate limiting middleware to all requests.
 app.use(limiter)
+
 app.get("/",(req:Request, res:Response) => {
     res.status(200).json( { msg: "Welcome" }); 
   });
