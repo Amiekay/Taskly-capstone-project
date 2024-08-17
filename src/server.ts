@@ -9,7 +9,7 @@ require('./utils/cron-job')
 const userModel = require('./models/userModel')
 const rateLimit = require('express-rate-limit')
 const client = require('./integrations/redis')
-const PORT= process.env.PORT || 3000;
+const PORT= process.env.PORT || 10000;
 
 
 
