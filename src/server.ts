@@ -66,7 +66,7 @@ app.use((err:any, req:Request, res:Response, next:any) => {
 
 const server=app.listen(
     PORT,()=>{
-        console.log(`Server is running on port http://localhost:${PORT}`)
+        console.log(`Server is running on port ${PORT}`)
     }
 )
 process.on("unhandledRejection",(error,promise)=>{
