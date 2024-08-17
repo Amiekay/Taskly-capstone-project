@@ -8,7 +8,7 @@ const organizationRoute = require('./routes/organizationRoutes')
 require('./utils/cron-job')
 const userModel = require('./models/userModel')
 const rateLimit = require('express-rate-limit')
-const client = require('./integrations/redis')
+const initializeRedisClient = require('./integrations/redis')
 const PORT= process.env.PORT || 4000;
 
 
@@ -22,8 +22,7 @@ const limiter = rateLimit({
 
 //connect to db
 connectDB()
-client.connect()
-
+initializeRedisClient()
 const app= express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
