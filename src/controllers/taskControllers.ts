@@ -25,9 +25,7 @@ export const createTask = async(req: Request, res: Response)=> {
         if (!board) return res.status(404).json({ message: 'Board not found' });
 
         // check if user is a member or owner of org/board
-        console.log(user._id)
-        console.log(board)
-        console.log(boardId)
+
 if(board.boardMembers.includes(user._id)){
     const task =  await taskModel.create({
         title,
@@ -82,21 +80,28 @@ export const assignTaskToUser = async(req:Request, res:Response)=>{
       if (!task)
         return res.status(404).json({ message: "task not found" });
       
-      if (board.boardMembers.includes(user._id)){
+
+      if (!board.boardMembers.includes(user._id)) {
+        return res.status(404).json({message: "not a board member"})
+
+      }
+      if (!task.assignedTo.includes(user._id)){
      // assign task to user
       await task.assignedTo.push(user._id)
       await task.save()
-
+      }
+      else{
+        return res.status(404).json({message:'you have already been assigned this task'})
       }
     //   call nodemailer
-    for( let userId of task.assignedTo){
-        const user = userModel.findById(userId)
+
         sendNotification(user.email, 'New assigned task', "Kindly do the assigned task")
-    }
+
 
 
   
       return res.status(200).json(task);
+
     } catch (error: any) {
       return res.status(500).json({ message: error.message });
     }
@@ -162,14 +167,15 @@ export const  addComment = async(req: Request, res: Response) =>{
  
         if (board.boardMembers.includes(user._id)){
             // assign task to user
-             await task.comments.push(user._id)
+             await task.comments.push({comment, user})
              await task.save()
        
              }
     //    call nodemailer
-
     for( let userId of task.assignedTo){
-        const user = userModel.findById(userId)
+
+        const user = await userModel.findById(userId)
+        console.log(user.email)
         sendNotification(user.email, 'New comment', "Kindly check your tasks")
     }
 
