@@ -6,7 +6,7 @@ const controller =require('../controllers/userController');
 
 
 // Create user
-router.post('/signup', validateUser.ValidateUserCreationWithJoi, controller.createUser)
+router.post('/signup/:organizationId', validateUser.ValidateUserCreationWithJoi, controller.createUser)
 
 // login user
 

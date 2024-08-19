@@ -45,7 +45,8 @@ const createOrganization = async (req: Request, res: Response) => {
       password: password,
       organization: organization._id,
       role: "owner",
-    })}
+    }).select('- password')
+  }
     else user = isUserExist
     
     if (!user){
