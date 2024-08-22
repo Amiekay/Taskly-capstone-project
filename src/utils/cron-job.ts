@@ -39,7 +39,7 @@ import moment from 'moment';
 
         if (notificationMessage) {
             for( let userId of task.assignedTo){
-                const user = userModel.findById(userId)
+                const user = await userModel.findById(userId)
                 sendNotification(user.email, 'Task duedate reminder', notificationMessage)
             }
         }

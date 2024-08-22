@@ -30,12 +30,12 @@ const taskModel = new mongoose.Schema(
 
     startDate: {
       type: Date,
-      required: true
+      required: true,
     },
     dueDate: {
       type: Date,
       default: Date.now,
-      required: true
+      required: true,
     },
     priority: {
       type: String,
@@ -59,7 +59,7 @@ const taskModel = new mongoose.Schema(
     assignedTo: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
 
     board: { type: mongoose.Schema.ObjectId, ref: "Board", required: true },
-  },
+  }
   // { timestamps: true }
 );
 

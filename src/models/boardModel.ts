@@ -22,7 +22,7 @@ const boardModel = new mongoose.Schema(
     boardMembers: [{ type: mongoose.Schema.ObjectId, ref: "User" }],
     tasks: [{ type: mongoose.Schema.ObjectId, ref: "Task" }],
   },
-  
+
   { timestamps: true }
 );
 

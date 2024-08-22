@@ -19,20 +19,18 @@ const createUser = async (req: Request, res: Response) => {
     });
     if (existingUser) return res.status(404).json({ message: "user exist" });
 
-    const User = await userModel
-      .create({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        organization: organization._id,
-      })
+    const User = await userModel.create({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      organization: organization._id,
+    });
 
     return res.status(200).json({
       message: "Registered successfuly",
       User,
     });
-
   } catch (error) {
     res.status(400).json({
       message: "an error occured",

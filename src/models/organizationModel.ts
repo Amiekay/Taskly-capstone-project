@@ -17,7 +17,7 @@ const orgModel = new mongoose.Schema(
     },
     owner: {
       type: mongoose.Schema.ObjectId,
-      ref: "User"
+      ref: "User",
     },
   },
   { timestamps: true }

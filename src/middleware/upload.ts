@@ -1,15 +1,16 @@
-const multer = require("multer")
+const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const path = require("path");
-import cloudinary from "../integrations/cloudinary";'../integrations/cloudinary'
-function uploadMiddleware(folderName:any) {
+import cloudinary from "../integrations/cloudinary";
+("../integrations/cloudinary");
+function uploadMiddleware(folderName: any) {
   const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
-    params: (req:Request, file:any) => {
+    params: (req: Request, file: any) => {
       const folderPath = `${folderName.trim()}`; // Update the folder path here
       const fileExtension = path.extname(file.originalname).substring(1);
       const publicId = `${file.fieldname}-${Date.now()}`;
-      
+
       return {
         folder: folderPath,
         public_id: publicId,
