@@ -5,11 +5,23 @@ const client = redis.createClient({
   url: process.env.REDIS_URI
 })
 
-client.on("connect", ()=>{
-  console.log(`Connected to Redis successfully!`);
+client.on(
+        "error",
+        (e: any) => {
+          console.error(`Failed to create the Redis client with error:`);
+          console.error(e);
+        }
+      )
 
-}
-)
+      try {
+              // connect to the Redis server
+              client.connect();
+              console.log(`Connected to Redis successfully!`);
+            } catch (e) {
+              console.error(`Connection to Redis failed with error:`);
+              console.error(e);
+            }
+          
 
 
 module.exports = client
