@@ -116,7 +116,7 @@ export const getTasks = async (req: Request, res: Response) => {
     if (labels) filter.labels = { $in: labels };
 
     // Check cache
-    const cacheKey = `/organizations/board/tasks:${JSON.stringify(filter)}:${limit}:${page}`;
+    const cacheKey = `GET:/organizations/board/tasks:${JSON.stringify(filter)}:${limit}:${page}`;
     console.log(cacheKey);
     const data = await redisClient.get(cacheKey);
     

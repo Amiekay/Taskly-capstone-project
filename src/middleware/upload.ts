@@ -2,7 +2,8 @@ const multer = require("multer");
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const path = require("path");
 import cloudinary from "../integrations/cloudinary";
-("../integrations/cloudinary");
+
+
 function uploadMiddleware(folderName: any) {
   const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
