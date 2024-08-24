@@ -31,7 +31,6 @@ const bearerTokenAuth = async (req: Request, res: Response, next: any) => {
       req.user = <any>user;
     }
 
-    console.log(user);
 
     next();
   } catch (error) {

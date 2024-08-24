@@ -6,7 +6,7 @@ const boardModel = require("../models/boardModel");
 const userModel = require("../models/userModel");
 const taskModel = require("../models/taskModel");
 const app = express();
-const { initializeRedisClient } = require("../integrations/redis");
+const redisClient= require("../integrations/redis");
 
 app.use(express.json());
 
@@ -103,12 +103,11 @@ export const getTasks = async (req: Request, res: Response) => {
   try {
     const { boardId, status, assignedTo, priority, labels } = req.query;
 
-    req.body.user = req.user
-    const user = req.body.user
+
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 20;
 
-    const filter: any = {status: 'todo'};
+    const filter: any = {};
     if (boardId) filter.board = boardId;
     if (status) filter.status = status;
     if (assignedTo) filter.assignedTo = assignedTo;
@@ -116,10 +115,10 @@ export const getTasks = async (req: Request, res: Response) => {
     if (labels) filter.labels = { $in: labels };
 
     // Check cache
-    const cacheKey = `${user.email}`;
+    const cacheKey = `/organizations/board/tasks:JSON.stringify(${filter}):${limit}:${page}`;
     console.log(cacheKey);
-    const data = initializeRedisClient.get(cacheKey);
-    console.log(data);
+    const data = await redisClient.get(cacheKey);
+    
     if (data) {
       console.log("returning from cache");
 
@@ -135,7 +134,7 @@ export const getTasks = async (req: Request, res: Response) => {
       .skip((page - 1) * limit)
       .limit(limit);
     // set cache
-    await initializeRedisClient.setEx(cacheKey, 10 * 60, JSON.stringify(tasks));
+    await redisClient.setEx(cacheKey, 10 * 60, JSON.stringify(tasks));
     return res.status(200).json(tasks);
   } catch (error: any) {
     return res.status(500).json({ message: error.message });

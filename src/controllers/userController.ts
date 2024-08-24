@@ -3,6 +3,8 @@ import { Response, Request } from "express";
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const orgModel = require("../models/organizationModel");
+const logger = require('../logger/logger')
+
 
 const createUser = async (req: Request, res: Response) => {
   try {
@@ -40,6 +42,7 @@ const createUser = async (req: Request, res: Response) => {
 };
 
 const login = async (req: Request, res: Response) => {
+  logger.info('logged in ')
   const { email, password } = req.body;
 
   try {
@@ -53,7 +56,7 @@ const login = async (req: Request, res: Response) => {
       });
     }
     const validPassword = await user.isValidPassword(password);
-    console.log(password);
+
     if (!validPassword) {
       return res.status(422).json({
         message: "Email or password is not correct",

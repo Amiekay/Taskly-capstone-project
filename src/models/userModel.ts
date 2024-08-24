@@ -51,9 +51,6 @@ userModel.pre("save", async function (this: any, next: NextFunction) {
 });
 
 userModel.methods.isValidPassword = async function (password: String) {
-  console.log(this.password);
-  const hash = await bcrypt.hash(password, 10);
-  console.log(hash);
   const compare = await bcrypt.compare(password, this.password);
   return compare;
 };

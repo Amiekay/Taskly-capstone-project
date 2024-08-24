@@ -1,6 +1,5 @@
 import express from "express";
 const validateUser = require("../middleware/userMiddleware");
-
 const router = express.Router();
 const controller = require("../controllers/userController");
 
